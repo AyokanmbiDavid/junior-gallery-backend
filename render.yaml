@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: junior-gallery-backend
+    env: node
+    plan: starter
+    repo: https://github.com/AyokanmbiDavid/junior-gallery-backend.git
+    branch: main
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REFRESH_TOKEN
+        sync: false
+      - key: GOOGLE_DRIVE_FOLDER_ID
+        sync: false
