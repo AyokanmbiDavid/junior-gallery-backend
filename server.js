@@ -47,9 +47,8 @@ app.get('/', (req, res) => {
   res.send('Church Gallery API is running');
 });
 
-const PORT = 5000; 
+const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI;
-
 
 mongoose
   .connect(MONGODB_URI)
