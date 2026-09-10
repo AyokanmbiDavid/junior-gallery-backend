@@ -30,7 +30,7 @@ export const createMember = async (req, res) => {
       image: driveFile.directLink,
       googleDriveId: driveFile.fileId,
     });
-
+  
     res.status(201).json(member);
   } catch (err) {
     res.status(500).json({ error: err.message });

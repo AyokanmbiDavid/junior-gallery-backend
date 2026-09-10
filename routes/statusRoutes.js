@@ -1,5 +1,6 @@
 import express from 'express';
-import { upload } from '../middleware/upload.js';
+// FIXED: Imported the custom crash-safe single field wrapper
+import { safeUploadSingle } from '../middleware/upload.js'; 
 import {
   getStatuses,
   createStatus,
@@ -12,8 +13,9 @@ import {
 const router = express.Router();
 
 router.get('/', getStatuses);
-router.post('/', upload.single('image'), createStatus);
-router.put('/:id', upload.single('image'), updateStatus);
+// FIXED: Swapped upload.single to safeUploadSingle
+router.post('/', safeUploadSingle('image'), createStatus);
+router.put('/:id', safeUploadSingle('image'), updateStatus);
 router.patch('/:id/toggle-new', toggleNewTag);
 router.patch('/:id/like', likeStatus);
 router.delete('/:id', deleteStatus);

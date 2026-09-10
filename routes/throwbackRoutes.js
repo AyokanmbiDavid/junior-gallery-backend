@@ -1,5 +1,6 @@
 import express from 'express';
-import { upload } from '../middleware/upload.js';
+// FIXED: Imported the custom crash-safe single field wrapper
+import { safeUploadSingle } from '../middleware/upload.js'; 
 import {
   getThrowbacks,
   createThrowback,
@@ -11,8 +12,9 @@ import {
 const router = express.Router();
 
 router.get('/', getThrowbacks);
-router.post('/', upload.single('image'), createThrowback);
-router.put('/:id', upload.single('image'), updateThrowback);
+// FIXED: Swapped upload.single to safeUploadSingle
+router.post('/', safeUploadSingle('image'), createThrowback);
+router.put('/:id', safeUploadSingle('image'), updateThrowback);
 router.patch('/:id/like', likeThrowback);
 router.delete('/:id', deleteThrowback);
 

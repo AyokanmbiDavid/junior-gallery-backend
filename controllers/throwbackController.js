@@ -43,7 +43,7 @@ export const updateThrowback = async (req, res) => {
 
     if (description) throwback.description = description;
 
-    if (req.file) {
+    if (req.file) { 
       await deleteFromDrive(throwback.googleDriveId);
 
       const fileName = `throwback_${Date.now()}_${req.file.originalname}`;
