@@ -18,7 +18,7 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://miracle-center-junior-church-galler.vercel.app'
+  'https://miracle-center-junior-church-galler-mu.vercel.app'
 ];
 
 const corsOptions = {
