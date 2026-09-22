@@ -15,6 +15,8 @@ export const getStatuses = async (req, res) => {
 export const createStatus = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'Image file required' });
+    const {className} = req.body
+    if (!className)  return res.status(400).json({ error: 'Status Class required' });
 
     const fileName = `status_${Date.now()}_${req.file.originalname}`;
     const driveFile = await uploadToDrive(req.file.buffer, fileName, req.file.mimetype);
@@ -23,6 +25,7 @@ export const createStatus = async (req, res) => {
       src: driveFile.directLink,
       googleDriveId: driveFile.fileId,
       isNewSunday: true,
+      class: className
     });
 
     res.status(201).json(status);
@@ -34,13 +37,15 @@ export const createStatus = async (req, res) => {
 // Update status
 export const updateStatus = async (req, res) => {
   try {
-    const { isNewSunday } = req.body;
+    const { isNewSunday,className } = req.body;
     const status = await Status.findById(req.params.id);
     if (!status) return res.status(404).json({ error: 'Status not found' });
 
     if (isNewSunday !== undefined) {
       status.isNewSunday = isNewSunday === 'true' || isNewSunday === true;
     }
+
+    status.class = className
 
     if (req.file) {
       await deleteFromDrive(status.googleDriveId);
@@ -94,7 +99,7 @@ export const deleteStatus = async (req, res) => {
     if (!status) return res.status(404).json({ error: 'Status not found' });
 
     await deleteFromDrive(status.googleDriveId);
-    await status.deleteOne();
+    await status.deleteOne(); 
     res.status(200).json({ message: 'Status deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });

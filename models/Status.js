@@ -10,6 +10,7 @@ const statusSchema = new mongoose.Schema(
 },
     isNewSunday: { type: Boolean, default: true },
     likes: { type: Number, default: 0 },
+    class: ['Toddlers', 'Children', 'Pre-teens', 'Teenagers'],
   },
   { timestamps: true } 
 );
